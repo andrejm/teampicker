@@ -48,17 +48,17 @@ var go2013 = [
 		['Danka', 'Stano', 'Viktor', 'Ondrej', 'Katka'],
 		['DanoK', 'MisoCh', 'Simonka', 'Rachel', 'MarekM', 'Adam'],
 		['Nika', 'MarekK', 'MisoJ', 'Tima', 'DanoP', 'MisoM'],
-		['Lucia', 'Betka','Andrej', 'Filip', 'Martin', 'Brano']
+		['Lucka', 'Betka','Andrej', 'Filip', 'Martin', 'Brano']
 	],
 	//Obelisk Zin
 	[
-		['Nika', 'DanoK', 'MisoJ', 'Filip', 'Viktor', 'Lucia'],
+		['Nika', 'DanoK', 'MisoJ', 'Filip', 'Viktor', 'Lucka'],
 		['MarekK', 'Betka', 'Danka', 'DanoP', 'Adam', 'Andrej', 'Stano'],
-		['MichalCh', 'Adam', 'Martin', 'Ondrej', 'Tima', 'Simonka', 'MisoM']
+		['MisoCh', 'Adam', 'Martin', 'Ondrej', 'Tima', 'Simonka', 'MisoM']
 	],
 	//Paseraci
 	[
-		['Ondrej', 'Andrej', 'Lucia'],
+		['Ondrej', 'Andrej', 'Lucka'],
 		['Brano', 'Nika', 'MarekK', 'Viktor'],
 		['Simonka', 'MisoM', 'Adam', 'Betka'],
 		['DanoK', 'Tima', 'Katka', 'MisoJ'],
@@ -71,7 +71,7 @@ var go2013 = [
 		['Danka', 'Martin', 'Katka', 'Betka'],
 		['Ondrej', 'Stano', 'Andrej', 'MarekM'],
 		['Viktor', 'Lucka', 'MisoM', 'Simonka'],
-		['MisoCh', 'Rachel', 'MisoJ', 'Dano'],
+		['MisoCh', 'Rachel', 'MisoJ', 'DanoK'],
 		['MarekK', 'Nika', 'Filip', 'Brano']
 	]
 ];
@@ -98,9 +98,31 @@ var go2013 = [
 // ];
 
 // var dummyActivities = ['Grupac', 'Ekosystemy'];
-var ppl2013 = ['Katka', 'Ondrej', 'Rachel', 'Stano', 'Tima', 'Andrej', 'MisoCh', 'MisoJ', 
-				'MarekK', 'DanoK', 'Adam', 'Filip', 'Nika', 'MisoM', 'MarekM', 'Danka',
-				'Lucka', 'DanoP', 'Viktor', 'Martin', 'Brano', 'Simonka', 'Betka'];
+var ppl2013 = [
+	'Adam', 
+	'Andrej', 
+	'Betka',
+	'Brano', 
+	'Danka',
+	'Katka', 
+	'Ondrej', 
+	'Stano', 
+	'MisoCh', 
+	'MisoJ', 
+	'MarekK', 
+	'DanoK', 
+	'Filip', 
+	'Nika', 
+	'MisoM', 
+	'MarekM', 
+	'Lucka', 
+	'DanoP', 
+	'Viktor', 
+	'Martin', 
+	'Rachel', 
+	'Simonka', 
+	'Tima', 
+];
 
 
 // load file - http://www.html5rocks.com/en/tutorials/file/dndfiles/
@@ -116,46 +138,46 @@ var teamPicker = {
 	
 	init : function() {
 		//fileLoader.init();
-		// teamPicker.iterateArray(dummy);
-		teamPicker.iterateArray(go2013);
+		teamPicker._iterateArray(go2013);
 
-		console.log('Na akcii je tychto ' + teamPicker.names.length + ' ludi: ');
-		// console.log(teamPicker.names);
+		console.log('Naplneny objekt:');
 		console.log(teamPicker.teamTable);
 
-		jQuery.each(ppl2013, function(i, row) {
-			console.log('>>>' + row);
-			// console.log(teamPicker.teamTable[row]);
+		teamPicker._getZeros(teamPicker.teamTable);
 
-			jQuery('#show').append('<div class="col col-' + row + '">');
-			jQuery('.col-' + row).append('<h3>' + row + '<br>&darr;</h3>');
-
-			jQuery.each(ppl2013, function(j, row2) {
-				console.log(row2);
-				jQuery('.col-' + row).append(row2 + ' - ');
-				if (teamPicker.teamTable[row][row2] === undefined) {
-					console.log(0);
-					jQuery('.col-' + row).append('0');
-				} else {
-					console.log(teamPicker.teamTable[row][row2]);
-					jQuery('.col-' + row).append(teamPicker.teamTable[row][row2]);
-				}
-				jQuery('.col-' + row).append('<br>');
-
-			});
-
-			jQuery('#show').append('</div> <!-- .col -->');
-
-		});
-
-		// console.log(renderTable.renderHead(teamPicker.teamTable));
-		
-		//renderTable.renderHead(teamPicker.teamTable).appendTo(jQuery(teamPicker.htmlTableId));
 	},
 
-	//this takes array parsed from file
-	//returns matrix with names of players, their co-players and number of occurences 
-	iterateArray : function(teamArray) {
+	//this takes array of games and teams (TODO parsed from file)
+	//returns matrix with names of players, their co-players and number of occurences
+	_iterateArray : function(teamArray) {
+
+		//inicializuj tabulku na nuly - pre kazde meno pridaj do objektu 
+		// objekt = {
+		// 	meno1 : {
+		// 		meno2: 0,
+		// 		meno3: 3,
+		// 		meno4: 1
+		// 	},
+		// 	meno2 : {
+		// 		meno1: 1,
+		// 		meno3: 2
+		// 	},
+		// 	meno3 : {
+		// 	}
+		// };
+		jQuery.each(ppl2013, function(iter, person1) {
+			teamPicker.teamTable[person1] = {};
+			jQuery.each(ppl2013, function(iter2, person2) {
+				if (person1 !== person2) {
+					teamPicker.teamTable[person1][person2] = 0;
+				}
+			});
+		});
+
+		console.log('Inicializovany objekt: ');
+		console.log(teamPicker.teamTable);
+
+		// now fill the object with real stuff
 		jQuery.each(teamArray, function(i, game) {
 			// console.log(i, game);
 			jQuery.each(game, function(j, team) {
@@ -163,20 +185,17 @@ var teamPicker = {
 				jQuery.each(team, function(k, player) {
 					// console.log(i, j, k, player);
 					
-					//pridaj cloveka do zoznamu, ak tam uz nie je
-					if (jQuery.inArray(player, teamPicker.names) == -1) {
-						teamPicker.names[teamPicker.names.length] = player;
-						teamPicker.teamTable[player] = {};
-					}
-
 					//u kazdeho playera prejdi vsetkych spoluhracov v time a inkrementuj
 					jQuery.each(team, function(l, coPlayer) {
 						if(coPlayer != player) {
-							//ak existuje, inkrementuj, ak nie, inicializuj na jednotku
-							if (teamPicker.teamTable[player].hasOwnProperty(coPlayer)) {
-								teamPicker.teamTable[player][coPlayer]++;
+							//check if the player and coplayer exist (maybe somebody from organizers was in team - we drop this info)
+							// TODO refactor
+							if (jQuery.inArray(player, ppl2013) !== -1) {
+								if (jQuery.inArray(coPlayer, ppl2013) !== -1) {
+									teamPicker.teamTable[player][coPlayer]++;
+								}
 							} else {
-								teamPicker.teamTable[player][coPlayer] = 1;
+								console.log(player + ' asi neexistuje');
 							}
 						}
 					});
@@ -185,30 +204,22 @@ var teamPicker = {
 				}); //player each
 			}); //team each
 		}); //game each
-	} // iterateArray
+	}, // iterateArray
+
+	// return people that haven't played in one team so far
+	_getZeros : function(teamTable) {
+		jQuery.each(ppl2013, function(i, player) {
+			console.log(player + ' este nebol/a v time s tymito ludmi: ');
+			jQuery.each(ppl2013, function(j, coPlayer) {
+				if(teamTable[player][coPlayer] == 0) {
+					console.log(coPlayer);
+				}
+			});
+
+		});
+	}
 
 }; //teamPicker
-
-var renderTable = {
-	// pridavat classy podla mien
-	
-	renderHead : function(teamTable) {
-		var $head = jQuery('<tr/>');
-		
-		jQuery.each(teamTable, function(index, element) {
-			jQuery('<th>'+index+'</th>').appendTo($head);
-		});
-
-		return $head;
-	},
-
-	renderBody : function() {
-		//table musim renderovat po riadkoch (?)
-		//prejst kazdu prvourovnovu property objektu
-
-	}
-};
-
 
 //handles (local) file upload
 var fileLoader = {
