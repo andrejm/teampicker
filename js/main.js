@@ -1,7 +1,6 @@
 /* Priklad inputu 
 
-possible gotchas: 
-- ciarka na konci riadku -> ??
+possible gotchas: - ciarka na konci riadku -> ??
 - medzery uplne random
 - meno cloveka obsahuje medzeru -> trim vsetky medzery ako prvy krok
 - v jednej hre nemusi byt tolko ludi ako v druhej
@@ -161,7 +160,7 @@ var teamPicker = {
 			$results.append('<br><strong>' + player + ' este nebol/a v time s tymito ludmi: </strong><br>');
 			
 			jQuery.each(peopleArray, function(j, coPlayer) {
-				if(teamTable[player][coPlayer] == 0) {
+				if(teamTable[player][coPlayer] === 0) {
 					// console.log(coPlayer);
 					$results.append(coPlayer + '<br>');
 				}
@@ -177,17 +176,17 @@ var teamPicker = {
 
 		$results.html('');
 
-		console.info('outputting table')
+		console.info('outputting table');
 		console.table(teamTable);
 
-		for (player in teamTable) {
+		for (var player in teamTable) {
 			$results.append('<br><strong>'+ player + '</strong><br>');
 
-			for(coplayer in teamTable[player]) {
+			for(var coplayer in teamTable[player]) {
 				$results.append('<em>'+ coplayer + '</em> - '+ teamTable[player][coplayer] +'<br>');				
 			}
 		}
-	} //outputTable
+	}, //outputTable
 }; //teamPicker
 
 // takes care of showing sortable/dragndrop ui and saving results to html5 local storage
@@ -225,13 +224,13 @@ var frontEnd = {
 				localStorage.removeItem('newTeam');
 				console.log(localStorage);
 				console.info('local storage deleted');
-			})
+			});
 
 			$('#number-of-teams').on('change', function() {
 				var num = $(this).val();
 				frontEnd._generateLists(num);
 				console.log(num);
-			})
+			});
 
 			frontEnd._generateLists($('#number-of-teams').val());
 
@@ -264,8 +263,8 @@ var frontEnd = {
 			var listtItems = $(listt).find('li');
 			that.newTeam[i] = [];
 			$.each(listtItems, function(j, item) {
-				that.newTeam[i][j] = $(item).html()
-			})
+				that.newTeam[i][j] = $(item).html();
+			});
 		});
 
 	},
@@ -273,6 +272,7 @@ var frontEnd = {
 	//saves to Local Storage
 	_saveTeams : function() {
 		var that = this;
+		var savedTeams;
 
 		$('#persist').on('click', function(){
 			// console.log(that);
@@ -283,10 +283,10 @@ var frontEnd = {
 
 			// if there were some, parse them to array, otherwise initialize new one
 			if(allDivisions !== null) {
-				var savedTeams = JSON.parse(localStorage.getItem('teampickerAllDivisions'));
+				savedTeams = JSON.parse(localStorage.getItem('teampickerAllDivisions'));
 				
 			} else {
-				var savedTeams = [];
+				savedTeams = [];
 			}
 
 			//append new info to temp array
@@ -300,10 +300,10 @@ var frontEnd = {
 	}, //_saveTeams()
 
 	_generateLists : function(num) {
-		$('.teamlists').html('')
+		$('.teamlists').html('');
 		for (var i = num - 1; i >= 0; i--) {
 			$('.teamlists').append('<ul class="teamlist connect"></ul>');
-		};
+		}
 		frontEnd._initSortables();
 	}, //generateLists
 
@@ -316,7 +316,7 @@ var frontEnd = {
 
 	_supportsStorage : function() {
 	  try {
-	    return 'localStorage' in window && window['localStorage'] !== null;
+	    return 'localStorage' in window && window.localStorage !== null;
 	  } catch (e) {
 	    return false;
 	  }
