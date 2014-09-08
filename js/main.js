@@ -235,8 +235,74 @@ var fileLoader = {
 	}
 }; //fileLoader
 
+var frontEnd = {
+	newTeam : [],
+
+	init : function() {
+
+		// var newTeam = [];
+
+		//fill the first list with names from array
+		$.each(ppl2013, function(i, player) {
+			$('.peoplelist').append('<li>' + player +'</li>');
+		});
+
+		// init sortables
+		$('.peoplelist, .teamlist').sortable({
+			connectWith : '.connect',
+			placeholder: 'my-placeholder'
+		});
+
+		//on persist make team array out of lists
+		frontEnd._saveTeams();
+
+
+	},
+
+	//fills array of teams and players
+	_makeArray : function() {
+
+		var that = this;
+
+		$teamlists = $('.teamlist');
+		$.each($teamlists, function(i, listt) {
+			var listtItems = $(listt).find('li');
+			that.newTeam[i] = [];
+			$.each(listtItems, function(j, item) {
+				that.newTeam[i][j] = $(item).html()
+			})
+		});
+
+	},
+
+	//saves to Local Storage
+	_saveTeams : function() {
+		var that = this;
+
+
+		$('#persist').on('click', function(){
+			console.log(that);
+			that._makeArray();
+
+			var arrayToSave = JSON.stringify(that.newTeam);
+			console.log(arrayToSave);
+			localStorage.setItem( 'newTeam', arrayToSave );
+			console.log( JSON.parse( localStorage.getItem( 'newTeam' ) ) );
+		});
+
+	}, //saveTeams
+
+	_supportsStorage : function() {
+	  try {
+	    return 'localStorage' in window && window['localStorage'] !== null;
+	  } catch (e) {
+	    return false;
+	  }
+	} //supportsStorage
+}; //frontEnd
 
 
 $(document).ready(function() {
 	teamPicker.init();
+	frontEnd.init();
 });
