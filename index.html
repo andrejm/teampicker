@@ -24,20 +24,33 @@
 
         <!-- Add your site or application content here -->
 
-        <div id="show"></div>
+        <div id="add-new-class">
+            <h2>Kto je v triede?</h2>
+            <ul class="hints">
+                <li class="hints__item">Vpíš sem zoznam študentov, každého oddeľ čiarkou, takto: Aurel, Mia, Zuzka, Sebi</li>
+                <li class="hints__item">Odlišuj rovnaké mená, inak sa to pokazí: AdamP, AdamR, Adam-drobec</li>
+            </ul>
+            <textarea id="new-class" name="" id="" cols="30" rows="10"></textarea>
+            <button id="save-names">Uložiť finálny zoznam a pokračovať</button>
+        </div>
 
-        <table id="megatable"></table>
+        <div id="add-new-division">
+            <ul class="peoplelist connect">
+            </ul>
 
-        <ul class="peoplelist connect">
-        </ul>
+            <input id="number-of-teams" type="number" value="3">
 
-        <ul class="teamlist connect"></ul>
-        <ul class="teamlist connect"></ul>
-        <ul class="teamlist connect"></ul>
+            <div class="teamlists"></div>
 
-        <p>&nbsp;</p>
+            <!-- <ul class="teamlist connect"></ul>
+            <ul class="teamlist connect"></ul>
+            <ul class="teamlist connect"></ul> -->
 
-        <button id="persist">persist</button>
+            <p>&nbsp;</p>
+
+            <button id="persist">persist</button>
+            <button id="remove">remove storage</button>
+        </div>
 
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>

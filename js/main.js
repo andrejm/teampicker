@@ -130,7 +130,7 @@ var ppl2013 = [
 // iterate object
 // render table - https://datatables.net/
 
-//this puts it all together
+//takes care of constructing megatable and returning pairs that have not yet been together
 var teamPicker = {
 	names : [], //reference of unique names
 	teamTable : {}, //this is out ultimate matrix of occurences
@@ -221,41 +221,64 @@ var teamPicker = {
 
 }; //teamPicker
 
-//handles (local) file upload
-var fileLoader = {
-	config : {
-		varname : 'varvalue'
-	},
-	init : function() {
-		console.log(dummy);
-
-	},
-	readFile : function() {
-
-	}
-}; //fileLoader
-
+// takes care of showing sortable/dragndrop ui and saving results to html5 local storage
 var frontEnd = {
 	newTeam : [],
+	$addNewClassUI : jQuery('#add-new-class'),
+	$addNewDivisionUI : jQuery('#add-new-division'),
 
 	init : function() {
 
-		// var newTeam = [];
+		//ak existuje v localstorage teampickerStudentNames, zobraz textareu
+		// inak ukaz dragndrop ui - napln list menami z local storage, inicializuj sortable, zobraz number picker, daj onchange event
+		// on button click uloz do local storage
 
-		//fill the first list with names from array
-		$.each(ppl2013, function(i, player) {
-			$('.peoplelist').append('<li>' + player +'</li>');
-		});
 
-		// init sortables
-		$('.peoplelist, .teamlist').sortable({
-			connectWith : '.connect',
-			placeholder: 'my-placeholder'
-		});
+		if(localStorage.getItem('teampickerStudentNames') === null) {
+			this.$addNewDivisionUI.hide();	
 
-		//on persist make team array out of lists
-		frontEnd._saveTeams();
+			jQuery('#save-names').on('click', function() {
+				var studentNamesArray = jQuery('#new-class').val().replace(/ /g,'').split(",");
+				// console.log(arrayToSave);
+				localStorage.setItem( 'teampickerStudentNames', JSON.stringify(studentNamesArray) );
 
+				console.log('Saved: ' + localStorage.getItem('teampickerStudentNames'));
+
+			});		
+
+		} else {
+
+			this.$addNewClassUI.hide();
+
+			console.log(localStorage.getItem('teampickerStudentNames'));
+
+			$('#remove').on('click', function() {
+				localStorage.removeItem('teampickerStudentNames');
+				localStorage.removeItem('teampickerAllDivisions');
+				localStorage.removeItem('newTeam');
+				console.log(localStorage);
+				console.info('local storage deleted');
+			})
+
+			$('#number-of-teams').on('change', function() {
+				var num = $(this).val();
+				frontEnd._generateLists(num);
+				console.log(num);
+			})
+
+			var studentNames = JSON.parse(localStorage.getItem('teampickerStudentNames'));
+			
+			//fill the first list with names from array
+			$.each(studentNames, function(i, player) {
+				$('.peoplelist').append('<li>' + player +'</li>');
+			});
+
+			// init sortables
+			frontEnd._initSortables();
+			
+			//on persist make team array out of lists
+			frontEnd._saveTeams();
+		}
 
 	},
 
@@ -279,18 +302,44 @@ var frontEnd = {
 	_saveTeams : function() {
 		var that = this;
 
-
 		$('#persist').on('click', function(){
-			console.log(that);
-			that._makeArray();
+			// console.log(that);
+			that._makeArray(); //fills this.newTeam array
 
-			var arrayToSave = JSON.stringify(that.newTeam);
-			console.log(arrayToSave);
-			localStorage.setItem( 'newTeam', arrayToSave );
-			console.log( JSON.parse( localStorage.getItem( 'newTeam' ) ) );
+			// pull out currently saved data from local storage
+			var allDivisions = localStorage.getItem('teampickerAllDivisions');
+
+			// if there were some, parse them to array, otherwise initialize new one
+			if(allDivisions !== null) {
+				var savedTeams = JSON.parse(localStorage.getItem('teampickerAllDivisions'));
+				
+			} else {
+				var savedTeams = [];
+			}
+
+			//append new info to temp array
+			savedTeams.push(that.newTeam);
+			
+			// stringify + save
+			localStorage.setItem('teampickerAllDivisions', JSON.stringify(savedTeams) );
 		});
 
-	}, //saveTeams
+	}, //_saveTeams()
+
+	_generateLists : function(num) {
+		$('.teamlists').html('')
+		for (var i = num - 1; i >= 0; i--) {
+			$('.teamlists').append('<ul class="teamlist connect"></ul>');
+		};
+		frontEnd._initSortables();
+	}, //generateLists
+
+	_initSortables : function() {
+		$('.peoplelist, .teamlist').sortable({
+			connectWith : '.connect',
+			placeholder: 'my-placeholder'
+		});
+	}, //_initSortables()
 
 	_supportsStorage : function() {
 	  try {
@@ -303,6 +352,6 @@ var frontEnd = {
 
 
 $(document).ready(function() {
-	teamPicker.init();
 	frontEnd.init();
+	teamPicker.init();
 });
