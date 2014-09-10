@@ -24,43 +24,51 @@
 
         <!-- Add your site or application content here -->
 
-        <div id="add-new-class">
-            <h2>Kto je v triede?</h2>
-            <ul class="hints">
-                <li class="hints__item">Vpíš sem zoznam študentov, každého oddeľ čiarkou, takto: Aurel, Mia, Zuzka, Sebi</li>
-                <li class="hints__item">Odlišuj rovnaké mená, inak sa to pokazí: AdamP, AdamR, Adam-drobec</li>
-            </ul>
-            <textarea id="new-class" name="" id="" cols="30" rows="10"></textarea>
-            <button id="save-names">Uložiť finálny zoznam a pokračovať</button>
+        <div id="add-new-class" class="row">
+            <div class="col">
+                <h2>Kto je v triede?</h2>
+                <ul class="hints">
+                    <li class="hints__item">Vpíš sem zoznam študentov, každého oddeľ čiarkou, takto: Aurel, Mia, Zuzka, Sebi</li>
+                    <li class="hints__item">Odlišuj rovnaké mená, inak sa to pokazí: AdamP, AdamR, Adam-drobec</li>
+                </ul>
+                <textarea id="new-class" name="" id="" cols="30" rows="10"></textarea>
+                <button id="save-names">Uložiť finálny zoznam a pokračovať</button>
+            </div>
         </div>
 
-        <div id="add-new-division">
-            <input id="number-of-teams" type="number" value="3">
+        <div class="row">
+            <div class="col col--left">
+                <label for="teams-no">Koľko tímov?</label>
+                <input id="number-of-teams" class="teams-no" type="number" value="3" name="teams-no">
+            </div>
+            <div class="col col--right">
+                <h2>Tímy:</h2>
+            </div>
+        </div>
+
+        <div id="add-new-division" class="row">
+            <div class="col col--left">
+                
+                <ul class="peoplelist connect"></ul>
+
+
+
+                <button id="persist">Uložiť, hotovo</button>
+                <button id="remove">Toto nestláčaj</button>
+            </div>
+            <div class="col col--right">
+                <div class="teamlists"></div>
+                <!-- <ul class="teamlist connect"></ul>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <h2>Aktuálny stav:</h2>
+            <div id="results"></div>
             
-            <ul class="peoplelist connect"></ul>
-
-            <div class="teamlists"></div>
-
-            <!-- <ul class="teamlist connect"></ul>
-            <ul class="teamlist connect"></ul>
-            <ul class="teamlist connect"></ul> -->
-
-            <p>&nbsp;</p>
-
-            <button id="persist">persist</button>
-            <button id="remove">remove storage</button>
+            <h2>Kto s kým ešte nebol:</h2>
+            <div id="results-zeros"></div>
         </div>
-
-        <p>&nbsp;</p>
-
-        <div id="results">
-            
-        </div>
-
-        <div id="results-zeros">
-            
-        </div>
-
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/vendor/jquery-ui.min.js"></script>

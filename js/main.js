@@ -157,12 +157,12 @@ var teamPicker = {
 		$results.html('');
 		jQuery.each(peopleArray, function(i, player) {
 			// console.log(player + ' este nebol/a v time s tymito ludmi: ');
-			$results.append('<br><strong>' + player + ' este nebol/a v time s tymito ludmi: </strong><br>');
+			$results.append('<br><br><strong>' + player + ' este nebol/a v time s tymito ludmi: </strong><br>');
 			
 			jQuery.each(peopleArray, function(j, coPlayer) {
 				if(teamTable[player][coPlayer] === 0) {
 					// console.log(coPlayer);
-					$results.append(coPlayer + '<br>');
+					$results.append(coPlayer + ', ');
 				}
 			});
 
@@ -177,14 +177,18 @@ var teamPicker = {
 		$results.html('');
 
 		console.info('outputting table');
+		console.log(teamTable);
 		console.table(teamTable);
 
 		for (var player in teamTable) {
-			$results.append('<br><strong>'+ player + '</strong><br>');
+
+			var resultRow = '';
 
 			for(var coplayer in teamTable[player]) {
-				$results.append('<em>'+ coplayer + '</em> - '+ teamTable[player][coplayer] +'<br>');				
+				resultRow += '<span class="result-coplayer">'+ coplayer + ' - '+ teamTable[player][coplayer] +'&#10005;</span>';
 			}
+
+			$results.append('<div class="result-item"><span class="result-player">'+ player + '</span>' + resultRow + '</div>');
 		}
 	}, //outputTable
 }; //teamPicker

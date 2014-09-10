@@ -15,12 +15,17 @@ button,
 input,
 select,
 textarea {
-    color: #222;
+    color: #f5f5f5;
 }
 
 body {
     font-size: 1em;
     line-height: 1.4;
+    background: -webkit-linear-gradient(90deg, #DAD299 10%, #B0DAB9 90%); /* Chrome 10+, Saf5.1+ */
+    background:    -moz-linear-gradient(90deg, #DAD299 10%, #B0DAB9 90%); /* FF3.6+ */
+    background:     -ms-linear-gradient(90deg, #DAD299 10%, #B0DAB9 90%); /* IE10 */
+    background:      -o-linear-gradient(90deg, #DAD299 10%, #B0DAB9 90%); /* Opera 11.10+ */
+    background:         linear-gradient(90deg, #DAD299 10%, #B0DAB9 90%); /* W3C */
 }
 
 /*
@@ -89,56 +94,70 @@ textarea {
     padding: 0.2em 0;
 }
 
-/* ==========================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =================================================================================================
    Author's custom styles
-   ========================================================================== */
+   ================================================================================================= */
 
-
-/*todo - kazdy druhy stlpec inou farbou*/
-
-table#megatable {
-    font-family: verdana,arial,sans-serif;
-    font-size:11px;
-    color:#333333;
-    border-width: 1px;
-    border-color: #999999;
-    border-collapse: collapse;
+h2 {
+    clear: both;
+    margin-top: 2em;
 }
 
-table#megatable th {
-    background-color:#c3dde0;
-    border-width: 1px;
-    padding: 8px 5px;
-    border-style: solid;
-    border-color: #a9c6c9;
+.col {
+   float: left;
+   box-sizing: border-box;
 }
 
-table#megatable tr {
-    background-color:#d4e3e5;
+.row {
+   clear: both;
+   padding-left: 1em;
+   overflow: auto;
+   padding-top: 1em;
 }
 
-table#megatable td {
-    border-width: 1px;
-    padding: 8px;
-    border-style: solid;
-    border-color: #a9c6c9;
+.col--left {
+   width: 20%;
 }
 
-table#megatable td:nth-child(2n),
-table#megatable th {
-    border-right-width: 2px;
+.col--right {
+   width: 75%;
+   margin-left: 4%;
 }
 
 .peoplelist, .teamlist {
     min-height: 60px;
+    padding: 0;
 }
 
 .peoplelist {
-    background-color: orange;
 }
 
 .teamlist {
-    background: lime;
+    width: 23%;
+    margin-right: 2%;
+    float: left;
+    overflow: auto;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+}
+
+.connect.teamlist li {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    display: block;
 }
 
 .my-placeholder {
@@ -148,12 +167,62 @@ table#megatable th {
 .connect {
     list-style-type: none;
 }
+
 .connect li {
-    display: inline-block;
-    margin: 1em;
+    margin: 0.5em;
+    margin-bottom: 0.5em;
     background: rgba(0, 0, 0, 0.11);
     padding: 0.5em;
     cursor: pointer;
+    display: inline-block;
+}
+
+textarea {
+    color: #8B6F32;
+    padding: 1em;
+    margin: 0.5em 0;
+    width: 35em;
+}
+
+label {
+}
+
+.teams-no {
+    width: 2em;
+    padding: 0.1em;
+    font-size: 2em;
+    margin-top: 0.5em;
+    color: #8B6F32;
+}
+
+button {
+    border: 1px solid #DAD299;
+    background: #8B6F32;
+    padding: 0.75em 2em;
+    color: #DAD299;
+    margin: 0.5em 0;
+}
+
+#remove {
+    opacity: 0.65;
+}
+
+.result-item {
+    width: 15%;
+    margin-right: 1%;
+    float: left;
+    margin-bottom: 2em;
+    text-align: right;
+}
+
+.result-player {
+    display: block;
+    font-family: Georgia, sans-serif;
+    font-size: 1.2em;
+}
+
+.result-coplayer {
+    display: block;
 }
 
 
@@ -357,20 +426,4 @@ table#megatable th {
     h3 {
         page-break-after: avoid;
     }
-}
-
-
-
-.col {
-    float: left;
-    border-right: 1px solid black;
-    text-align: right;
-    font-size: 10px;
-    margin-top: 5px;
-    padding: 0 5px;
-}
-
-h3 {
-    margin-bottom: 0;
-    margin-top: 5px;
 }
