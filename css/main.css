@@ -227,6 +227,19 @@ button {
 
 
 
+@media print {
+    #add-new-class,
+    .print-hide {
+        display: none;
+    }
+
+    body {
+        font-size: 0.85em; 
+    }
+    .page-break {
+        page-break-before: always;
+    }
+}
 
 
 

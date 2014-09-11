@@ -87,6 +87,7 @@ possible gotchas: - ciarka na konci riadku -> ??
 // 	'Simonka', 
 // 	'Tima', 
 // ];
+// Adam, Andrej, Betka,Brano, Danka,Katka, Ondrej, Stano, MisoCh, MisoJ, MarekK, DanoK, Filip, Nika, MisoM, MarekM, Lucka, DanoP, Viktor, Martin, Rachel, Simonka, Tima
 
 
 //takes care of constructing megatable and returning pairs that have not yet been together
